@@ -1,0 +1,241 @@
+import telebot
+from telebot import types
+
+client = telebot.TeleBot("5421394040:AAFbSv_wWP6ncEmA8O19faSMtN3UdEVuD3I")
+
+@client.message_handler(commands=["start"])
+def start(message):
+	app_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+	app_ukrainian = types.KeyboardButton("Українська")
+	app_russian = types.KeyboardButton("Русский")
+	app_english = types.KeyboardButton("English")
+	app_chinese = types.KeyboardButton("中國人")
+	app_portuguese = types.KeyboardButton("Português")
+	app_japanese = types.KeyboardButton("日本")
+	app_korean = types.KeyboardButton("한국인")
+	app_markup.add(app_ukrainian, app_russian, app_english, app_chinese, app_portuguese, app_japanese, app_korean)
+	chat_id = message.chat.id
+	first_name = message.chat.first_name
+	client.send_message(chat_id, f"👋Привіт {first_name}, оберіть мову!\n\n👋Привет {first_name}, выберите язык!\n\n👋Hello {first_name}, choose your language!\n\n👋你好{first_name}，選擇你的語言！\n\n👋Olá {first_name}, escolha seu idioma!\n\n👋こんにちは {first_name} さん、言語を選択してください!\n\n👋안녕하세요 {first_name}님, 언어를 선택하세요!",  reply_markup = app_markup)
+	print(f"{first_name} нажав на 'start' ")
+
+@client.message_handler(content_types=["text"])
+def text(message):
+	chat_id = message.chat.id
+	if message.chat.type == 'private':
+		if message.text == 'Українська':
+			app_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+			app_keyboard = types.KeyboardButton("💰Замовити Телеграм бота")
+			app_keyboard1 = types.KeyboardButton("🪓Ціни на ботів")
+			app_keyboard2 = types.KeyboardButton("🗝️Зв’язатися з розробітником")
+			app_keyboard3 = types.KeyboardButton("💸Донат")
+			app_markup.add(app_keyboard, app_keyboard1, app_keyboard2, app_keyboard3)
+			chat_id = message.chat.id
+			client.send_message(chat_id, "🎉Ви обрали Українську!",  reply_markup = app_markup)
+
+		if message.text == '💰Замовити Телеграм бота':
+			client.send_message(chat_id, "📝Опишіть що ви хочите мати в Телеграм боті:")
+			client.register_next_step_handler(message, send_z)
+
+		if message.text == '🪓Ціни на ботів':
+			client.send_message(chat_id, "💸Ціни на телеграм ботів!🛒\n\n🔐1.Бот для приватних повідомлень от 50-200грн\n🔓2.Бот для груп от 150-300грн\n🔑3.Бот для приватних повідомлень и груп 500-1000грн\n🎄Також бувайть акції")
+
+		if message.text == '🗝️Зв’язатися з розробітником':
+			client.send_message(chat_id, "📝Напишіть яка причина на звязаня:")
+			client.register_next_step_handler(message, send_d)
+		
+		if message.text == '💸Донат':
+			client.send_message(chat_id, "💸Відправити кошти автору: https://www.donationalerts.com/r/maxvan")
+
+
+		if message.text == 'Русский':
+			app_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+			app_keyboard = types.KeyboardButton("💰Заказать Телеграмм бота")
+			app_keyboard1 = types.KeyboardButton("🪓Цены на ботов")
+			app_keyboard2 = types.KeyboardButton("🗝️Связаться с разработчиком")
+			app_keyboard3 = types.KeyboardButton("💸Задонатить")
+			app_markup.add(app_keyboard, app_keyboard1, app_keyboard2, app_keyboard3)
+			chat_id = message.chat.id
+			client.send_message(chat_id, "🎉Вы выбрали Русский!",  reply_markup = app_markup)
+		
+		if message.text == '💰Заказать Телеграмм бота':
+			client.send_message(chat_id, "📝Опишите, что вы хотите иметь в Телеграмм боте:")
+			client.register_next_step_handler(message, send_z)
+
+		if message.text == '🪓Цены на ботов':
+			client.send_message(chat_id, "💸Цены на телеграмм ботов!🛒\n\n🔐1.Бот для частных сообщений от 80-320руб\n🔓2.Бот для групп от 240-480руб\n🔑3.Бот для частных сообщений и групп 800-1600руб\n🎄Также бывают акции!")
+
+		if message.text == '🗝️Связаться с разработчиком':
+			client.send_message(chat_id, "📝Напишите какая причина на связку:")
+			client.register_next_step_handler(message, send_d)
+		
+		if message.text == '💸Задонатить':
+			client.send_message(chat_id, "💸Отправить средства автору: https://www.donationalerts.com/r/maxvan")
+
+
+		if message.text == '한국인':
+			app_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+			app_keyboard = types.KeyboardButton("💰텔레그램 봇 주문")
+			app_keyboard1 = types.KeyboardButton("🪓봇 가격")
+			app_keyboard2 = types.KeyboardButton("🗝️개발자에게 문의")
+			app_keyboard3 = types.KeyboardButton("💸기부")
+			app_markup.add(app_keyboard, app_keyboard1, app_keyboard2, app_keyboard3)
+			chat_id = message.chat.id
+			client.send_message(chat_id, "🎉한국어를 선택하셨습니다!",  reply_markup = app_markup)
+		
+		if message.text == '💰텔레그램 봇 주문':
+			client.send_message(chat_id, "📝Telegram 봇에 원하는 것을 설명하십시오.")
+			client.register_next_step_handler(message, send_z)
+
+		if message.text == '🪓봇 가격':
+			client.send_message(chat_id, "💸텔레그램 봇 가격!🛒\n\n🔐1.1800-7200원화 의 개인 메시지용 봇\n🔓2.5400-10800원화 의 그룹용 봇\n🔑3.개인 메시지 및 그룹용 봇 18000-36000원화\n🎄프로모션도 있어요!")
+
+		if message.text == '🗝️개발자에게 문의':
+			client.send_message(chat_id, "📝연결 이유를 작성하십시오:")
+			client.register_next_step_handler(message, send_d)
+		
+		if message.text == '💸기부':
+			client.send_message(chat_id, "💸저자에게 자금 보내기: https://www.donationalerts.com/r/maxvan")
+
+
+		if message.text == '日本':
+			app_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+			app_keyboard = types.KeyboardButton("💰注文電報ボット")
+			app_keyboard1 = types.KeyboardButton("🪓ボットの価格")
+			app_keyboard2 = types.KeyboardButton("🗝️開発者に連絡する")
+			app_keyboard3 = types.KeyboardButton("💸寄付")
+			app_markup.add(app_keyboard, app_keyboard1, app_keyboard2, app_keyboard3)
+			chat_id = message.chat.id
+			client.send_message(chat_id, "🎉日本語を選択しました!",  reply_markup = app_markup)
+		
+		if message.text == '💰注文電報ボット':
+			client.send_message(chat_id, "📝Telegram ボットに何を持たせたいかを説明してください。")
+			client.register_next_step_handler(message, send_z)
+
+		if message.text == '🪓ボットの価格':
+			client.send_message(chat_id, "💸テレグラム ボットの価格!🛒\n\n🔐1.185-740JPY のプライベート メッセージのボット\n🔓2.555-1110JPY のグループのボット\n🔑3.プライベート メッセージとグループのボット 1850-3700JPY\n 🎄キャンペーンもあります！")
+
+		if message.text == '🗝️開発者に連絡する':
+			client.send_message(chat_id, "📝接続の理由を書きます。")
+			client.register_next_step_handler(message, send_d)
+		
+		if message.text == '💸寄付':
+			client.send_message(chat_id, "💸著者に資金を送る: https://www.donationalerts.com/r/maxvan")
+
+
+		if message.text == '中國人':
+			app_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+			app_keyboard = types.KeyboardButton("💰訂購電報機器人")
+			app_keyboard1 = types.KeyboardButton("🪓機器人價格")
+			app_keyboard2 = types.KeyboardButton("🗝️聯繫開發商")
+			app_keyboard3 = types.KeyboardButton("💸捐")
+			app_markup.add(app_keyboard, app_keyboard1, app_keyboard2, app_keyboard3)
+			chat_id = message.chat.id
+			client.send_message(chat_id, "🎉您選擇了中文!",  reply_markup = app_markup)
+		
+		if message.text == '💰訂購電報機器人':
+			client.send_message(chat_id, "📝描述你想在 Telegram 機器人中擁有什麼")
+			client.register_next_step_handler(message, send_z)
+
+		if message.text == '🪓機器人價格':
+			client.send_message(chat_id, "💸電報機器人的價格！🛒\n\n🔐1.Bot 用於 10-40CNY 的私人消息\n🔓2.Bot 用於 20-55CNY 的群組\n🔑3.Bot 用於私人消息和 90-180CNY 的群組\n🎄 還有優惠哦！")
+
+		if message.text == '🗝️聯繫開發商':
+			client.send_message(chat_id, "📝寫下連接的原因：")
+			client.register_next_step_handler(message, send_d)
+		
+		if message.text == '💸捐':
+			client.send_message(chat_id, "💸向作者匯款： https://www.donationalerts.com/r/maxvan")
+
+
+		if message.text == 'Português':
+			app_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+			app_keyboard = types.KeyboardButton("💰Encomende o bot do Telegram")
+			app_keyboard1 = types.KeyboardButton("🪓Preços de bots")
+			app_keyboard2 = types.KeyboardButton("🗝️Entre em contato com o desenvolvedor")
+			app_keyboard3 = types.KeyboardButton("💸Doar")
+			app_markup.add(app_keyboard, app_keyboard1, app_keyboard2, app_keyboard3)
+			chat_id = message.chat.id
+			client.send_message(chat_id, "🎉Você escolheu português!",  reply_markup = app_markup)
+		
+		if message.text == '💰Encomende o bot do Telegram':
+			client.send_message(chat_id, "📝Descreva o que você deseja ter no bot do Telegram:")
+			client.register_next_step_handler(message, send_z)
+
+		if message.text == '🪓Preços de bots':
+			client.send_message(chat_id, "💸Preços para bots de telegrama!🛒\n\n🔐1.Bot para mensagens privadas de 80-320BRL\n🔓2.Bot para grupos de 240-480BRL\n🔑3.Bot para mensagens privadas e grupos de 800-1600BRL\n🎄Também tem promoções!")
+
+		if message.text == '🗝️Entre em contato com o desenvolvedor':
+			client.send_message(chat_id, "📝Escreva qual é o motivo do bando:")
+			client.register_next_step_handler(message, send_d)
+		
+		if message.text == '💸Doar':
+			client.send_message(chat_id, "💸Envie fundos para o autor: https://www.donationalerts.com/r/maxvan")
+
+
+		if message.text == 'English':
+			app_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+			app_keyboard = types.KeyboardButton("💰Order Telegram bot")
+			app_keyboard1 = types.KeyboardButton("🪓Bot prices")
+			app_keyboard2 = types.KeyboardButton("🗝️Contact developer")
+			app_keyboard3 = types.KeyboardButton("💸Donate")
+			app_markup.add(app_keyboard, app_keyboard1, app_keyboard2, app_keyboard3)
+			chat_id = message.chat.id
+			client.send_message(chat_id, "🎉You have selected English!",  reply_markup = app_markup)
+		
+		if message.text == '💰Order Telegram bot':
+			client.send_message(chat_id, "📝Describe what you want to have in the Telegram bot:")
+			client.register_next_step_handler(message, send_z)
+
+		if message.text == '🪓Bot prices':
+			client.send_message(chat_id, "💸Prices for telegram bots!🛒\n\n🔐1.Bot for private messages from 2-5USD\n🔓2.Bot for groups from 4-8USD\n🔑3.Bot for private messages and groups 14-27USD\n🎄There are also promotions!")
+
+		if message.text == '🗝️Contact developer':
+			client.send_message(chat_id, "📝Write the reason for the connection:")
+			client.register_next_step_handler(message, send_d)
+		
+		if message.text == '💸Donate':
+			client.send_message(chat_id, "💸Send funds to the author: https://www.donationalerts.com/r/maxvan")
+
+def send_z(message):
+	first_name = message.chat.first_name
+	chat_id = message.chat.id
+	user_name = message.chat.id
+	z = message.text
+	admin_id = 2056307524
+	app_text = []
+	app_name = []
+	app_username = []
+	app_name.append(first_name)
+	app_username.append(user_name)
+	app_text.append(z)
+	client.send_message(admin_id, f"Є замовленя від: {app_name}.\nЙого (її) айди чи ник: {app_username}\nЙого чи її прохання:\n{app_text}")
+	
+	app_name.clear()
+	app_username.clear()
+	app_text.clear()
+	client.send_message(chat_id, f"🌈Заявка відправлена!\n⏱️Не вдовзі з вами звяжуться!")
+
+def send_d(message):
+	first_name = message.chat.first_name
+	chat_id = message.chat.id
+	user_name = message.chat.id
+	z = message.text
+	admin_id = 2056307524
+	app_text = []
+	app_name = []
+	app_username = []
+	app_name.append(first_name)
+	app_username.append(user_name)
+	app_text.append(z)
+	client.send_message(admin_id, f"Хоче звязатися: {app_name}.\nЙого (її) айди: {app_username}\nЙого чи її причина:\n{app_text}")
+	
+	app_name.clear()
+	app_username.clear()
+	app_text.clear()
+	client.send_message(chat_id, f"🌈Не вдовзі з вами звяжуться, очікуйте!")
+
+
+
+
+client.polling(none_stop=True)
